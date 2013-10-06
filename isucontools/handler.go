@@ -8,6 +8,7 @@ import (
 
 func InitStaticFiles(f func(urlpath string, handler http.Handler), prefix string) {
 	wf := func(path string, info os.FileInfo, err error) error {
+		log.Println(path, info, err)
 		if path == prefix {
 			return nil
 		}
@@ -18,6 +19,7 @@ func InitStaticFiles(f func(urlpath string, handler http.Handler), prefix string
 		if urlpath[0] != '/' {
 			urlpath = "/" + urlpath
 		}
+		log.Println("Registering", urlpath, path)
 		f, err := os.Open(path)
 		if err != nil {
 			log.Println(err)
