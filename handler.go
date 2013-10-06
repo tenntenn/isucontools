@@ -1,12 +1,13 @@
 package isucontools
 
 import (
-	"filepath"
+	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 )
 
-func InitStaticFiles(f func(urlpath string, handler http.Handler), prefix string) {
+func InitStaticFiles(callback func(urlpath string, handler http.Handler), prefix string) {
 	wf := func(path string, info os.FileInfo, err error) error {
 		log.Println(path, info, err)
 		if path == prefix {
@@ -37,7 +38,7 @@ func InitStaticFiles(f func(urlpath string, handler http.Handler), prefix string
 			}
 			w.Write(content)
 		}
-		f(urlpath, handler)
+		callback(urlpath, http.HandlerFunc(handler))
 		return nil
 	}
 	filepath.Walk(prefix, wf)
