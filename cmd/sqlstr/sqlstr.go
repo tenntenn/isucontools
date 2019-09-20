@@ -20,7 +20,15 @@ import (
 func main() {
 
 	fset := token.NewFileSet()
-	f, err := parser.ParseFile(fset, "app.go", os.Stdin, parser.ParseComments)
+
+	name := "stdin.go"
+	var src interface{} = os.Stdin
+	if len(os.Args) >= 2 {
+		name = os.Args[1]
+		src = nil
+	}
+
+	f, err := parser.ParseFile(fset, name, src, parser.ParseComments)
 	if err != nil {
 		log.Fatal(err)
 	}
