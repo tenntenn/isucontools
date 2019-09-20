@@ -63,7 +63,7 @@ func run(fset *token.FileSet, f *ast.File) (rerr error) {
 			} else {
 				fmt.Println(fset.Position(expr.Pos()))
 			}
-			fmt.Printf("\t%s\n", s)
+			fmt.Printf("\t%s\n\n", s)
 		}
 
 		return true
